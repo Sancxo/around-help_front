@@ -1,0 +1,11 @@
+@import './_Variables.css';
+
+.btn-prim {
+  background-color: var(--primary-color) !important;
+  border: 0.1rem solid var(--primary-color) !important;
+}
+
+.btn-prim:hover {
+  background-color: var(--secondary-color) !important;
+  border: 0.1rem solid var(--secondary-color) !important;
+}

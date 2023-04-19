@@ -1,0 +1,48 @@
+/* Text */
+.text-black {
+  color: var(--black-color);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+/* Font sizes */
+.fs-1 {
+  font-size: 1rem;
+}
+
+.fs-2 {
+  font-size: 2rem;
+}
+
+/* Colors */
+.greyed {
+  color: var(--grey-color);
+}
+
+/* Links */
+
+a {
+  color: var(--secondary-color);
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+.active {
+  font-weight: bold;
+}

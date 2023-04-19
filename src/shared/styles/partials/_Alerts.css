@@ -1,0 +1,50 @@
+.alert {
+  color: white;
+  font-weight: 500;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  translate: -50%;
+  width: 25rem;
+  border-radius: 10px 10px 5px 5px;
+}
+
+.error {
+  background-color: #ff5233aa;
+  border: 1px #ff5233 solid;
+}
+
+.success {
+  background-color: #2db92daa;
+  border: 1px #2db92d solid;
+}
+
+.alert p {
+  margin: 0;
+  flex-grow: 1;
+  /* line-height value picked from Milligram button styles to fit with the cross icon  */
+  line-height: 3.8rem;
+}
+
+.alert button {
+  margin: 0;
+  padding: 0;
+  padding-left: .5rem;
+  padding-right: .5rem;
+}
+
+@media(min-width: 40.0rem) {
+  .alert {
+    width: 50rem;
+  }
+}
+
+@media(min-width: 80.0rem) {
+  .alert {
+    width: 75rem;
+  }
+}
