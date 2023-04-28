@@ -17,7 +17,19 @@ export default function UserProfile({ defaultUser }: { defaultUser: User }): Rea
     const [error, setError] = useState(false);
 
     useEffect(() => {
-        getUserInfos(urlParams.id!, setUserProfile, setIsLoaded, setError);
+        async function getUser() {
+            try {
+                const userInfos: User = await getUserInfos(urlParams.id!);
+                setUserProfile(userInfos);
+                setIsLoaded(true);
+            } catch (error) {
+                console.error("An error occured ::::: ", error);
+                setIsLoaded(true);
+                setError(true);
+            }
+
+        }
+        getUser()
     }, [urlParams.id])
 
     if (!isLoaded) return <div><p>Please, wait ...</p></div>

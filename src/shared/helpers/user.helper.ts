@@ -159,24 +159,14 @@ function resetUserInfos(
     console.info("We reset the user informations on client side.")
 }
 
-function getUserInfos(
-    id: string,
-    setUserProfile: React.Dispatch<React.SetStateAction<User>>,
-    setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>,
-    setError: React.Dispatch<React.SetStateAction<boolean>>
+async function getUserInfos(
+    id: string
 ) {
-    axios
+    return await axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/user/${id}`, { withCredentials: true })
         .then(resp => {
             setAvatarToUser(resp.data.user, resp.data.avatar);
-
-            setUserProfile(resp.data.user);
-            setIsLoaded(true);
-        })
-        .catch(err => {
-            console.error("An error occured ::::: ", err);
-            setIsLoaded(true);
-            setError(true);
+            return resp.data.user
         })
 }
 
