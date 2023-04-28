@@ -159,9 +159,7 @@ function resetUserInfos(
     console.info("We reset the user informations on client side.")
 }
 
-async function getUserInfos(
-    id: string
-) {
+async function getUserInfos(id: string) {
     return await axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/user/${id}`, { withCredentials: true })
         .then(resp => {
