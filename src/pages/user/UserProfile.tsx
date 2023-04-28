@@ -27,7 +27,6 @@ export default function UserProfile({ defaultUser }: { defaultUser: User }): Rea
                 setIsLoaded(true);
                 setError(true);
             }
-
         }
         getUser()
     }, [urlParams.id])
