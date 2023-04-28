@@ -62,7 +62,7 @@ export default function AddressRegistration({ setIsAddressSet, setnewlyCreatedAd
         <legend>Your address:</legend>
 
         <label htmlFor="address-search-input">Address search engine <small>(mandatory)</small>:</label>
-        <input type="text" id="address-search-input" value={value} onChange={handleInput} disabled={!ready} placeholder="Where are you living?" required />
+        <input type="text" id="address-search-input" autoComplete="off" value={value} onChange={handleInput} disabled={!ready} placeholder="Where are you living?" required />
         {status === "OK" && <ul id="address-search-input-results" className="unstyled">{renderSuggestions()}</ul>}
       </fieldset>
 

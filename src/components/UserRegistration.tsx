@@ -52,39 +52,39 @@ export default function UserRegistration({ setIsUserCreated }: { setIsUserCreate
         <legend>About you:</legend>
 
         <label htmlFor="first-name-input">First name <small>(mandatory)</small>:</label>
-        <input type="text" name="first_name" id="first-name-input" onChange={handleInputs} required />
+        <input type="text" name="first_name" id="first-name-input" autoComplete="given-name" onChange={handleInputs} required />
         <br />
 
         <label htmlFor="last-name-input">Last name <small>(mandatory)</small>:</label>
-        <input type="text" name="last_name" id="last-name-input" onChange={handleInputs} required />
+        <input type="text" name="last_name" id="last-name-input" autoComplete="family-name" onChange={handleInputs} required />
         <br />
 
         <label htmlFor="email-input">Email <small>(mandatory)</small>:</label>
-        <input type="email" name="email" id="email-input" onChange={handleInputs} required />
+        <input type="email" name="email" id="email-input" autoComplete="email" onChange={handleInputs} required />
         <br />
 
         <label htmlFor="avatar-input">Profile picture:</label>
-        <input type="file" name="avatar" id="avatar-input" accept="image/png, image/jpeg, image/gif, image/webp, image/avif" onChange={handleImages} />
+        <input type="file" name="avatar" id="avatar-input" autoComplete="photo" accept="image/png, image/jpeg, image/gif, image/webp, image/avif" onChange={handleImages} />
         <br />
 
         <label htmlFor="id-card-input">Id card <small>(mandatory)</small>:</label>
-        <input type="file" name="id_card" id="id-card-input" accept="application/pdf, image/png, image/jpeg, image/gif, image/webp, image/avif" onChange={handleImages} required />
+        <input type="file" name="id_card" id="id-card-input" autoComplete="off" accept="application/pdf, image/png, image/jpeg, image/gif, image/webp, image/avif" onChange={handleImages} required />
         <br />
 
         <label htmlFor="password-input">Password <small>(mandatory)</small>:</label>
-        <input type="password" name="password" id="password-input" onChange={handleInputs} required />
+        <input type="password" name="password" id="password-input" autoComplete="new-password" onChange={handleInputs} required />
         <br />
 
         <label htmlFor="password-confirmation-input">Confirm password <small>(mandatory)</small>:</label>
-        <input type="password" name="password_confirmation" id="password-confirmation-input" onChange={handleInputs} required />
+        <input type="password" name="password_confirmation" id="password-confirmation-input" autoComplete="new-password" onChange={handleInputs} required />
         <br />
 
         <label htmlFor="birthdate-input">Birthdate:</label>
-        <input type="date" name="birthdate" id="birthdate-input" onChange={handleInputs} />
+        <input type="date" name="birthdate" id="birthdate-input" autoComplete="bday" onChange={handleInputs} />
         <br />
 
         <label htmlFor="about-input">About:</label>
-        <textarea name="about" id="about-input" cols={30} rows={10} onChange={handleInputs} ></textarea>
+        <textarea name="about" id="about-input" autoComplete="off" cols={30} rows={10} onChange={handleInputs} ></textarea>
         <br />
 
       </fieldset>
