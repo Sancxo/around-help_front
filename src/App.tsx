@@ -1,14 +1,14 @@
 import { ComponentType, lazy, ReactElement, Suspense, useContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 
-import SwitchMenu from "./components/SwitchMenu";
+import Header from "./components/Header";
 import Flash from './components/Flash';
-import { defaultUser, signInWithToken, signOut } from './shared/helpers/user.helper';
+import { defaultUser, signInWithToken } from './shared/helpers/user.helper';
 import { AddressContext, FlashMessageContext, UserContext } from './shared/context';
-import { getFlash } from './shared/helpers/misc.helper';
 import { Address, FlashMessage, setContext } from './shared/interfaces/misc.interfaces';
 import User from './shared/interfaces/user.interfaces';
 import { useJsApiLoader } from '@react-google-maps/api';
+import { useMenu } from './shared/hooks';
 
 const Home = lazy((): Promise<{ default: ComponentType<any> }> => import('./pages/Home'));
 const Register = lazy((): Promise<{ default: ComponentType<any> }> => import('./pages/auth/Register'));
@@ -23,8 +23,11 @@ const Conversation = lazy((): Promise<{ default: ComponentType<any> }> => import
 
 const libraries: ('places' | 'drawing' | 'geometry' | 'visualization' | 'localContext')[] = ['places'];
 
-function App(): ReactElement {
+export function isUserLoggedIn(route: ReactElement) {
+  return localStorage.getItem("connection_state") === "connected" ? route : <Navigate to="/" />;
+}
 
+function App(): ReactElement {
   // Media queries sizes based on Milligram library 
   const mediaQueryTablet: MediaQueryList = window.matchMedia("(min-width: 400px)");
   const mediaQueryDesktop: MediaQueryList = window.matchMedia("(min-width: 800px)");
@@ -36,7 +39,7 @@ function App(): ReactElement {
 
   // State
   const [isDesktop, setIsDesktop] = useState(mediaQueryDesktop.matches ? true : false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isMenuOpen, toggleMenu } = useMenu();
 
   // Google Maps API JS Loader
   const { isLoaded } = useJsApiLoader({
@@ -54,32 +57,24 @@ function App(): ReactElement {
   useEffect(() => {
     mediaQueryDesktop.addEventListener('change', _ => {
       setIsDesktop(!isDesktop);
-      isDesktop && setIsMobileMenuOpen(false);
+      isDesktop && toggleMenu(false);
     })
+
     return mediaQueryDesktop.removeEventListener('change', _ => {
       setIsDesktop(!isDesktop);
-      isDesktop && setIsMobileMenuOpen(false);
+      isDesktop && toggleMenu(false);
     });
   })
 
-  async function logOut() {
-    signOut(setUser, setAddress)
-      .then(resp => getFlash(setFlashMessage, resp));
-  }
-
-  function isUserLoggedIn(route: ReactElement) {
-    return localStorage.getItem("connection_state") ? route : <Navigate to="/" />;
-  }
-
   return (
-    <div className="text-center">
+    <div className="text-center" data-testid='app-container'>
       <Router>
         <header className="App-header">
-          <SwitchMenu logOut={logOut} isDesktop={isDesktop} isMobileMenuOpen={isMobileMenuOpen} setIsMobileMenuOpen={setIsMobileMenuOpen} />
+          <Header isDesktop={isDesktop} />
         </header>
 
 
-        <main className={`${(isMobileMenuOpen && mediaQueryTablet.matches) ? "pt-4" : ""}`} >
+        <main className={`${(isMenuOpen && mediaQueryTablet.matches) ? "pt-4" : ""}`} >
           <Suspense fallback="Loading app ...">
             <Routes>
               <Route element={<Home />} path='/' />
