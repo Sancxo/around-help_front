@@ -26,11 +26,19 @@ export const defaultNeed: Need = {
 async function listNeeds(setNeeds: Dispatch<SetStateAction<Need[]>>) {
   return await axios.get(`${process.env.REACT_APP_BACKEND_URL}/needs`, { withCredentials: true })
     .then(resp => setNeeds(resp.data))
+    .catch(err => {
+      setNeeds([]);
+      console.error(err)
+    })
 }
 
 async function countUnfulfilledNeeds(setUnfulfilledNeedsCount: Dispatch<SetStateAction<number>>) {
   return await axios.get(`${process.env.REACT_APP_BACKEND_URL}/unfulfilled_needs`)
     .then(resp => setUnfulfilledNeedsCount(resp.data))
+    .catch(err => {
+      console.error(err)
+      setUnfulfilledNeedsCount(0)
+    })
 }
 
 async function createNeed(need: NeedFormValues): Promise<any> {
