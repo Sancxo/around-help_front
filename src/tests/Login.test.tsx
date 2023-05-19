@@ -37,9 +37,7 @@ describe('Login page', () => {
     fireEvent.change(passwordInput, { target: { value: "Levi0s4" } });
     expect(passwordInput.value).toBe("Levi0s4");
 
-    const submitBtn = screen.getByRole('button');
-
-    fireEvent.click(submitBtn);
+    fireEvent.click(screen.getByRole('button'));
 
     await waitFor(() => {
       expect(localStorage.getItem("connection_state")).toBe("connected")
