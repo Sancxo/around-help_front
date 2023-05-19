@@ -4,7 +4,7 @@ import AppProvider from "../shared/context"
 import { MemoryRouter } from "react-router-dom"
 
 describe('Header', () => {
-  it('should render desktop menu', async () => {
+  it('should render desktop menu', () => {
     render(
       <MemoryRouter>
         <AppProvider>
@@ -16,7 +16,7 @@ describe('Header', () => {
     expect(screen.getByTestId("desktop-menu")).toBeTruthy();
   });
 
-  it('should render mobile menu with correct svg and then open it and close it', async () => {
+  it('should render mobile menu with correct svg and then open it and close it', () => {
     render(
       <MemoryRouter>
         <AppProvider>
