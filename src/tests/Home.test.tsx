@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import Home from "../pages/Home"
-import { registeredUserTest, serverEvents, wrapRouteAndRender } from "./test-helpers"
+import { registeredUserTest, serverEvents, wrapAndRenderRoute } from "./test-helpers"
 import { UserContext } from "../shared/context";
 import { MemoryRouter } from "react-router-dom";
 import { setupServer } from "msw/lib/node";
@@ -18,7 +18,7 @@ serverEvents(server);
 
 describe("Home", () => {
   it('should return a "Login" button', () => {
-    wrapRouteAndRender(<Home />);
+    wrapAndRenderRoute(<Home />);
 
     expect(screen.getByText('Log in')).toBeTruthy();
   });

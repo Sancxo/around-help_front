@@ -27,7 +27,7 @@ function Wrapper({ children }: { children: ReactNode }) {
   )
 }
 
-function wrapRouteAndRender(route: ReactElement) { render(route, { wrapper: Wrapper }) }
+function wrapAndRenderRoute(route: ReactElement) { render(route, { wrapper: Wrapper }) }
 
 const serverEvents = (server: SetupServer) => {
   beforeAll(() => server.listen());
@@ -55,4 +55,4 @@ const mockPostRequest = (url: string, mockedData: any) => {
   return server;
 }
 
-export { registeredUserTest, registeredAddressTest, wrapRouteAndRender, serverEvents, mockGetRequest, mockPostRequest };
+export { registeredUserTest, registeredAddressTest, wrapAndRenderRoute, serverEvents, mockGetRequest, mockPostRequest };

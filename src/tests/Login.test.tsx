@@ -1,6 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 import Login from "../pages/auth/Login";
-import { registeredUserTest, wrapRouteAndRender, registeredAddressTest, serverEvents } from "./test-helpers";
+import { registeredUserTest, wrapAndRenderRoute, registeredAddressTest, serverEvents } from "./test-helpers";
 import { setupServer } from "msw/lib/node";
 import { rest } from "msw";
 
@@ -26,7 +26,7 @@ serverEvents(server);
 
 describe('Login page', () => {
   it('should log user in', async () => {
-    wrapRouteAndRender(<Login />);
+    wrapAndRenderRoute(<Login />);
 
     const emailInput: HTMLInputElement = screen.getByLabelText('Email:');
     const passwordInput: HTMLInputElement = screen.getByLabelText('Password:');
