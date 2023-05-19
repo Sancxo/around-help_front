@@ -17,6 +17,14 @@ const registeredUserTest = {
   address_id: registeredAddressTest.id
 };
 
+const userFormTest = {
+  first_name: "Harry",
+  last_name: "Potter",
+  email: "harry.potter@hogwarts.com",
+  id_card: "",
+  password: "Levi0s4"
+};
+
 function Wrapper({ children }: { children: ReactNode }) {
   return (
     <MemoryRouter>
@@ -55,4 +63,4 @@ const mockPostRequest = (url: string, mockedData: any) => {
   return server;
 }
 
-export { registeredUserTest, registeredAddressTest, wrapAndRenderRoute, serverEvents, mockGetRequest, mockPostRequest };
+export { userFormTest, registeredUserTest, registeredAddressTest, wrapAndRenderRoute, serverEvents, mockGetRequest, mockPostRequest };
