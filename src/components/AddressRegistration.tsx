@@ -63,7 +63,7 @@ export default function AddressRegistration({ setIsAddressSet, setnewlyCreatedAd
 
         <label htmlFor="address-search-input">Address search engine <small>(mandatory)</small>:</label>
         <input type="text" id="address-search-input" autoComplete="off" value={value} onChange={handleInput} disabled={!ready} placeholder="Where are you living?" required />
-        {status === "OK" && <ul id="address-search-input-results" className="unstyled">{renderSuggestions()}</ul>}
+        {status === "OK" && <ul id="address-search-input-results" data-testid="address-search-input-results" className="unstyled">{renderSuggestions()}</ul>}
       </fieldset>
 
       <input type="button" className="btn-prim" value="Submit" onClick={handleSubmit} />

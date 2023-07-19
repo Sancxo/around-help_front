@@ -1,19 +1,53 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react"
-import Register from "../pages/auth/Register"
-import { mockPostRequest, registeredUserTest, serverEvents, userFormTest, wrapAndRenderRoute } from "./test-helpers"
+import { fireEvent, renderHook, screen, waitFor } from "@testing-library/react";
+import Register from "../pages/auth/Register";
+import { registeredAddressTest, registeredUserTest, serverEvents, userFormTest, wrapAndRenderRoute } from "./test-helpers";
+import { setupServer } from "msw/lib/node";
+import { rest } from "msw";
 
-const server = mockPostRequest(
-  `${process.env.REACT_APP_BACKEND_URL}/users`,
-  {
-    message: "Signed up successfully!",
-    user: registeredUserTest,
-    avatar: null
-  });
+const server = setupServer(
+  rest.post(
+    `${process.env.REACT_APP_BACKEND_URL}/users`,
+    (req, res, ctx) => {
+      return res(ctx.json(
+        {
+          message: "Signed up successfully!",
+          user: registeredUserTest,
+          avatar: null
+        }
+      ))
+    }
+  ),
+  rest.post(
+    `${process.env.REACT_APP_BACKEND_URL}/addresses`,
+    (req, res, ctx) => {
+      return res(ctx.json({
+        address: registeredAddressTest,
+        message: "Address succesfully created!"
+      }), ctx.status(201))
+    }
+  )
+);
 serverEvents(server);
 
+
 describe('Register page', () => {
-  it('should render registration form component', async () => {
+  it('should register and log user in, then render AddressRegistration component', async () => {
     wrapAndRenderRoute(<Register />)
+
+    // Create the script tag, set the appropriate attributes
+    var script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&callback=initMap`;
+    script.async = true;
+
+    // Attach your callback function to the `window` object
+    // @ts-ignore
+    window.initMap = function () {
+      // JS API is loaded and available
+    };
+
+    // Append the 'script' element to 'head'
+    document.head.appendChild(script);
+
 
     const firstNameInput: HTMLInputElement = screen.getByLabelText(/First name/i);
     const lastNameInput: HTMLInputElement = screen.getByLabelText(/Last name/i);
@@ -38,7 +72,19 @@ describe('Register page', () => {
     fireEvent.click(screen.getByRole('button'));
 
     await waitFor(() => {
-      expect(localStorage.getItem("connection_state")).toBe("connected")
+      expect(localStorage.getItem("connection_state")).toBe("connected");
     })
+
+    const addressInput = screen.getByLabelText(/Address search engine/);
+    expect(addressInput).toBeTruthy();
+
+    renderHook(() => { return { ready: true, suggestion: { status: 'OK', data: ["Test !"] } } })
+    fireEvent.change(addressInput, { target: { value: registeredAddressTest.address } });
+
+    const addressInputValue = addressInput.getAttribute("value");
+
+    expect(addressInputValue).toBe(registeredAddressTest.address);
+
+    fireEvent.click(screen.getByRole('button'));
   })
 })

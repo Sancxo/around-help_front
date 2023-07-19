@@ -7,7 +7,8 @@ import { render } from "@testing-library/react";
 
 const registeredAddressTest = {
   id: 4,
-  address: "4 Privet Drive, Little Whinging, Surrey County"
+  address: "4 Privet Drive, Little Whinging, Surrey County",
+  lat_lng: { lat: 51.6913075450287, lng: -0.4167962178607715 }
 }
 const registeredUserTest = {
   id: 200,
