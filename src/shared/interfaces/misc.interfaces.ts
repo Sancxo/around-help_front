@@ -19,7 +19,7 @@ export interface Address extends AddressValues {
 }
 
 export interface NeedFormValues {
-  [index: string]: string | number | boolean | undefined | Address | User | Array<User> | Date,
+  [index: string]: null | string | number | boolean | undefined | Address | User | Array<User> | Date,
   creator_id: number,
   title: string,
   description: string,
@@ -29,6 +29,7 @@ export interface NeedFormValues {
 export interface Need extends NeedFormValues {
   id: number,
   is_fulfilled: boolean,
+  fulfillment_timestamp: number | null,
   address: { id: number, address: string, lat_lng: { lat: number, lng: number } },
   creator: User,
   fulfillers: User[],

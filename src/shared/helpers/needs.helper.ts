@@ -16,6 +16,7 @@ export const defaultNeed: Need = {
   description: "",
   is_one_time: true,
   is_fulfilled: false,
+  fulfillment_timestamp: null,
   creator: { id: 0, first_name: "", last_name: "", email: "" },
   fulfillers: [],
   address: { id: 0, address: "", lat_lng: { lat: 0, lng: 0 } },

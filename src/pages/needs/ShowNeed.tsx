@@ -26,6 +26,8 @@ export default function ShowNeed(): ReactElement {
 
   const navigate = useNavigate();
 
+  const numberOfSecondsInADay = 86400;
+
   useEffect(() => {
     getNeed(urlParams.id!, setNeed, setIsLoaded, setError)
   }, [urlParams.id])
@@ -51,8 +53,11 @@ export default function ShowNeed(): ReactElement {
     setChatRoomId(chatRoomId);
   }
 
-  async function markAsFulfilled() {
-    need.is_fulfilled = !need.is_fulfilled;
+  async function republish() {
+    need.is_fulfilled = false;
+    need.fulfillment_timestamp = null;
+    need.fulfillers = [];
+
     const isNeedUpdated = await updateNeed(need.id, need);
 
     if (isNeedUpdated && !need.is_fulfilled) {
@@ -85,12 +90,12 @@ export default function ShowNeed(): ReactElement {
       <p>Located at: {need.address.address}</p>
       <p>Created : {need.created_at.toString()}. Updated: {need.updated_at.toString()}</p>
 
-      {need.creator_id === user.id ?
-        <button type="button" className="btn-prim mt-2" onClick={markAsFulfilled}>{need.is_fulfilled ? "Mark as not fulfilled" : "Mark as fulfilled"}</button> :
-        isUserFulfiller ?
-          <div><p className="mb-0"><small>You already responded to this Need.</small></p><Link to={`/conversation/${chatRoomId}`}><button type="button" className="btn-prim">Contact the creator of the Need</button></Link></div> :
-          <button type="button" className="btn-prim mt-2" onClick={addUserAndActiveConversation}>Answer this Need</button>
-      }
+      {need.creator_id === user.id && (need.fulfillment_timestamp !== null && (need.fulfillment_timestamp + numberOfSecondsInADay) >= Date.now()) &&
+        <button type="button" className="btn-prim mt-2" onClick={republish}>Republish this need</button>}
+      {(isUserFulfiller && need.creator_id !== user.id && need.is_fulfilled) &&
+        <div><p className="mb-0"><small>You already responded to this Need.</small></p><Link to={`/conversation/${chatRoomId}`}><button type="button" className="btn-prim">Contact the creator of the Need</button></Link></div>}
+      {(isUserFulfiller && need.creator_id !== user.id && !need.is_fulfilled) &&
+        <button type="button" className="btn-prim mt-2" onClick={addUserAndActiveConversation}>Answer this Need</button>}
     </div>
   )
 }
