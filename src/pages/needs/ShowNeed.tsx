@@ -94,7 +94,7 @@ export default function ShowNeed(): ReactElement {
         <button type="button" className="btn-prim mt-2" onClick={republish}>Republish this need</button>}
       {(isUserFulfiller && need.creator_id !== user.id && need.is_fulfilled) &&
         <div><p className="mb-0"><small>You already responded to this Need.</small></p><Link to={`/conversation/${chatRoomId}`}><button type="button" className="btn-prim">Contact the creator of the Need</button></Link></div>}
-      {(isUserFulfiller && need.creator_id !== user.id && !need.is_fulfilled) &&
+      {(!isUserFulfiller && need.creator_id !== user.id && !need.is_fulfilled) &&
         <button type="button" className="btn-prim mt-2" onClick={addUserAndActiveConversation}>Answer this Need</button>}
     </div>
   )
